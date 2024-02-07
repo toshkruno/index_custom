@@ -481,6 +481,10 @@
                 <b>PO Number:</b>
                 <span t-field="o.po_number"/>
             </li>
+            <li t-if="o.po_number">
+                <b>Custom Entry Number:</b>
+                <span t-field="o.custom_entry"/>
+            </li>
         </ul>
     </template>
     <template id="template_footer">
