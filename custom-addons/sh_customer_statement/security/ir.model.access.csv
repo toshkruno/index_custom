@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sh_customer_mail_history,access_sh_customer_mail_history,model_sh_customer_mail_history,base.group_user,1,1,1,1
+access_sh_res_partner_filter_statement,access_sh_res_partner_filter_statement,model_sh_res_partner_filter_statement,base.group_user,1,1,1,1
+access_account_move,access_account_move,account.model_account_move,base.group_portal,1,0,0,0
+access_account_payment,access_account_payment,account.model_account_payment,base.group_portal,1,0,0,0
+access_account_account,access_account_account,account.model_account_account,base.group_portal,1,0,0,0

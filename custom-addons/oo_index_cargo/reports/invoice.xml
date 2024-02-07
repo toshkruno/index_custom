@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="oo_index_report_invoice_document" inherit_id="account.report_invoice_document">
+
+        <xpath expr="//div[@id='informations']" position="after">
+
+            <div class="row">
+                <div class="col-3 mb-2" t-if="o.ship_to_id" name="ship_to_id">
+                    <strong>Ship To:</strong>
+                    <p class="m-0" t-field="o.ship_to_id"/>
+                </div>
+
+                <div class=" col-3 mb-2" t-if="o.consignee_id" name="consignee_id">
+                    <strong>Shipper Name:</strong>
+                    <p class="m-0" t-field="o.consignee_id"/>
+                </div>
+
+                <div class=" col-3 mb-2" t-if="o.transport_type" name="transport_type">
+                    <strong>Transport:</strong>
+                    <p class="m-0" t-field="o.transport_type"/>
+                </div>
+
+                <div class="col-3 mb-2" t-if="o.awb_number" name="awb_number">
+                    <strong>AWB Number:</strong>
+                    <p class="m-0" t-field="o.awb_number"/>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3 mb-2" t-if="o.bl_number" name="bl_number">
+                    <strong>BL Number:</strong>
+                    <p class="m-0" t-field="o.bl_number"/>
+                </div>
+
+                <div class="col-3 mb-2" t-if="o.custom_entry" name="custom_entry">
+                    <strong>Custom Entry:</strong>
+                    <p class="m-0" t-field="o.custom_entry"/>
+                </div>
+
+                <div class="col-3 mb-2" t-if="o.ship_date" name="ship_date">
+                    <strong>Shipping Date:</strong>
+                    <p class="m-0" t-field="o.ship_date"/>
+                </div>
+                <div class="col-3 mb-2" t-if="o.po_number" name="ship_date">
+                    <strong>PO NUmber:</strong>
+                    <p class="m-0" t-field="o.po_number"/>
+                </div>
+            </div>
+
+        </xpath>
+
+        <xpath expr="//div[@id='qrcode']" position="after">
+            <div id="indexqr">
+                <p>
+                    <t t-set="base_url" t-value="request.env['ir.config_parameter'].get_param('web.base.url')"/>
+                    <t t-set="portal_url" t-value="o.get_portal_url(report_type='html')"/>
+                    <t t-set="url" t-value="'{}{}'.format(base_url,portal_url)"/>
+                    <strong class="text-center">Valid Index Cargo Invoice. Scan Me!</strong>
+                    <br/>
+                    <br/>
+                    <img class="border border-dark rounded" t-att-src="'/report/barcode/?type=QR&amp;value={}&amp;width=110&amp;height=110'.format(url)"/>
+                </p>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='total']" position="replace">
+            <div id="total" class="row">
+                <div class="col-6">
+                    <t t-set="invoice_taxes" t-value="o.line_ids.filtered(lambda t: t.tax_line_id and t.tax_tag_ids and t.tax_tag_ids[0].applicability == 'taxes')"/>
+                    <t t-if="o.apply_manual_currency_exchange">
+                        <table class="table table-sm">
+                            <tr class="border-black">
+                                <th>
+                                    <span>Rate</span>
+                                </th>
+                                <th>
+                                    <span t-esc="o.currency_id.name"/>
+                                    <span>VAT</span>
+                                </th>
+                                <th>
+                                    <span>KES VAT</span>
+                                </th>
+                            </tr>
+                            <t t-foreach="invoice_taxes" t-as="inv_tax">
+                                <tr>
+                                    <td>
+                                        <span t-esc="inv_tax.name" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(abs(inv_tax.amount_currency))" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(inv_tax.credit)" />
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td><span>Totals</span></td>
+                                <td>
+                                    <span t-esc="sum(map(abs, invoice_taxes.mapped('amount_currency')))"/>
+                                </td>
+                                <td>
+                                    <span t-esc="sum(map(abs, invoice_taxes.mapped('credit')))"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                </div>
+                <div class="col-6">
+                    <table class="table table-sm" style="page-break-inside: avoid;">
+
+                        <!--Tax totals-->
+                        <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
+                        <t t-call="account.document_tax_totals"/>
+
+                        <!--Payments-->
+                        <t t-if="print_with_payments">
+                            <t t-if="o.payment_state != 'invoicing_legacy'">
+                                <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                                <t t-foreach="payments_vals" t-as="payment_vals">
+                                    <tr>
+                                        <td>
+                                            <i class="oe_form_field text-right oe_payment_label">Paid on <t t-esc="payment_vals['date']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                            </i>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="payment_vals['amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="len(payments_vals) &gt; 0">
+                                    <tr class="border-black">
+                                        <td>
+                                            <strong>Amount Due</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.amount_residual"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="partner_multi_level_approval_states" model="ir.ui.view">
+        <field name="name">partner.multi.level.approval.states</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/div[1]" position="before">
+                <header>
+                    <field name="approval_state" widget="statusbar"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>

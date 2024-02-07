@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="print_account_payment_order_document">
+        <t
+            t-set="doc"
+            t-value="doc.with_context({'lang': doc.generated_user_id and doc.generated_user_id.lang or user.lang})"
+        />
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="oe_structure" />
+                <h2>Remittance</h2>
+                <div>
+                    <p>
+                        <div class="col-auto col-2 mw-100 mb-2" name="in_invoice">
+                            <strong>Doc No:</strong>
+                            <span style="height: 30%;border:1px solid black;width:50%;"  t-field="doc.name" />
+                        </div>
+                    </p>
+                    <p>
+                        <div class="col-auto col-3 mw-100 mb-2" name="invoice_date">
+                            <strong>Date:</strong>
+                            <span style="height: 30%;border:1px solid black;width:50%;"  t-field="doc.date_generated" />
+                        </div>
+                    </p>
+
+                    <p>
+                        <div class="col-auto col-3 mw-100 mb-2" name="partner_bank_id">
+                            <strong>Cheque No:</strong>
+                            <span style="height: 30%;border:1px solid black;width:50%;" class="m-0 border-black" t-field="doc.description" />
+                        </div>
+                    </p>
+                </div>
+                <br />
+
+
+                <div class="row mt32 mb32"></div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Partner</th>
+                            <th class="text-center">Invoice Date</th>
+                            <th class="text-center">Invoice Number</th>
+                            <th class="text-center">Total Amount (Less Withholding)</th>
+                            <th class="text-right"> Total Amount</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Total amount on lines
+                            see _get_amount_total v8
+                        -->
+                        <t t-set="total_amount" t-value="0" />
+                        <tr t-foreach="doc.payment_line_ids" t-as="line">
+                            <!-- compute total amount -->
+                            <t
+                                t-set="total_amount"
+                                t-value="total_amount+line.amount_currency"
+                            />
+                            <td>
+                                <span t-field="line.partner_id.name" />
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.date" />
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.move_line_id" />
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.amount_2" />
+                            </td>
+                            <td class="text-right">
+                                <span t-field="line.amount_currency" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div align="right">
+                    <div class="border-black o_total" style="height: 20%;border:1px solid black;width:50%;">
+                        <h2 class="text-left">
+                            <strong>Total Amount Paid:</strong>
+                            
+                            <span t-field="line.amount_currency" />
+                        </h2>
+                    </div>
+                </div>
+                <br/>
+                <div id="informations" class="row mt32 mb32 text-right">
+                    <div align="left">
+                        <img class="card-header__bg" width="120px" height="120px" t-att-src="'/account_payment_order/static/description/ISO_9001_2015.jpg'" />
+                        <img class="card-header__bg" width="120px" height="120px" t-att-src="'/account_payment_order/static/description/ISO_45001_2018.jpg'" />
+                    </div>
+
+                    <div class="col-auto col-3 mw-100 mb-2" name="prepared by">
+                        <strong>Prepared By:</strong>
+                    <img t-att-src="'data:image/png;base64,%s' % to_text(doc.generated_user_id.sign_signature)"  style="max-height:50pt;max-width:50%"/>
+                        <span>_________________________</span>
+                        <p class="m-0">Finance Officer</p>
+                        <p class="m-0">Payables</p>
+                    </div>
+                    <div class="col-auto col-3 mw-100 mb-2" name="checked by">
+                        <strong>Checked By:</strong>
+                    <img t-att-src="'data:image/png;base64,%s' % to_text(doc.check_user_id.sign_signature)"  style="max-height:50pt;max-width:50%"/>
+
+                        <span>_________________________</span>
+                        <p class="m-0">Finance Manager</p>
+                        <p class="m-0">Payables</p>
+                    </div>
+                    <div class="col-auto col-3 mw-100 mb-2" name="checked by">
+                        <strong>Approved By:</strong>
+                    <img t-att-src="'data:image/png;base64,%s' % to_text(doc.approve_user_id.sign_signature)"  style="max-height:50pt;max-width:50%"/>
+
+                        <span>_________________________</span>
+                        <p class="m-0">Finance Controller</p>
+                        <p class="m-0">Finance</p>
+                    </div>
+                </div>
+                <div class="oe_structure" />
+            </div>
+        </t>
+    </template>
+    <template id="print_account_payment_order_main">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="account_payment_order.print_account_payment_order_document"
+                    t-lang="doc.generated_user_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

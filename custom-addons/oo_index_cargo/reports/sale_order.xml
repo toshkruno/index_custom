@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="oo_index_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//th[@name='th_quantity']" position="before">
+            <xpath expr="//th[@name='th_priceunit']" position="move"/>                
+        </xpath>
+
+        <xpath expr="//th[@name='th_taxes']" position="replace">
+            <th name="th_taxes" class="text-right">VAT</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_quantity']/span[2]" position="replace"/>
+        
+        <xpath expr="//td[@name='td_quantity']" position="before">
+            <xpath expr="//td[@name='td_priceunit']" position="move"/>                
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <div id="order-details">
+                <p t-field="doc.order_note"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

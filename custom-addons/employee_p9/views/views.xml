@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data noupdate="0">
+   
+
+
+   
+    
+ 
+    
+    <menuitem id="hr_employee_employee_p9" name="P9 Forms" parent="hr.menu_hr_root" sequence="9" action="action_hr_p9_employee_form" />
+
+  
+  </data>
+</odoo>

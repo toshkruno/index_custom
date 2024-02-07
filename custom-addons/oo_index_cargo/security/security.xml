@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="oo_contact_creation" model="res.groups">
+        <field name="name">Index Contact Creation</field>
+        <field name="comment">Has access to create contacts</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+    </record>
+
+    <record id="oo_product_creation" model="res.groups">
+        <field name="name">Index Product Creation</field>
+        <field name="comment">Has access to create products</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+    </record>
+</odoo>

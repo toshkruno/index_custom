@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_invoice_template_contemporary" model="ir.actions.report">
+            <field name="name">Contemporary</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_elegant" model="ir.actions.report">
+            <field name="name">Elegant</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_elegant</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_elegant</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_creative" model="ir.actions.report">
+            <field name="name">Creative</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_creative</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_creative</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_professional" model="ir.actions.report">
+            <field name="name">Professional</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_professional</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_professional</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_advanced" model="ir.actions.report">
+            <field name="name">Advanced</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_advanced</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_advanced</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_exclusive" model="ir.actions.report">
+            <field name="name">Exclusive</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_exclusive</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_exclusive</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_incredible" model="ir.actions.report">
+            <field name="name">Incredible</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_incredible</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_incredible</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+        <record id="report_invoice_template_innovative" model="ir.actions.report">
+            <field name="name">Innovative</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">biztech_report_template.report_invoice_template_custom_innovative</field>
+            <field name="report_file">biztech_report_template.report_invoice_template_custom_innovative</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">None</field>
+        </record>
+    </data>
+</odoo>

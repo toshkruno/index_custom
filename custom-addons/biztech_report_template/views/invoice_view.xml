@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_report_company_invoice_supplier_template" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.form.inherit</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_date']" position="after">
+                <field domain="[('report_name', 'ilike', '%invoice_template%')]" name="report_template_id" options="{'no_create': True}" />
+                <field invisible="1" name="report_template_id1" widget="selection" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

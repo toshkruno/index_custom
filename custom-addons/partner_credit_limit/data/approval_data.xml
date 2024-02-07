@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="allow_default_credit_approval_type" model="multi.approval.type.line">
+        <field name="name">Default approver</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="allow_credit_approval_type" model="multi.approval.type">
+        <field name="name">Allow Credit approval</field>
+        <field name="line_ids" eval="[(6, 0, [ref('partner_credit_limit.allow_default_credit_approval_type')])]"/>
+    </record>
+</odoo>
